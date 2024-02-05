@@ -1,3 +1,5 @@
-RSS Aggregator Project Done to get more practice in with Go
+# RSS Aggregator Project 
 
-Done with the assistance of boot.dev
+Created to get more practice in with Go
+
+_Done with the assistance of [boot.dev](https://www.boot.dev/tracks/backend_)_

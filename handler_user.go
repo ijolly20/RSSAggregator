@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/ijolly20/RSSAggregator/internal/database"
+	"github.com/ijolly20/RSSAggregator/internal/database/auth"
 )
 
 func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Request) {
@@ -32,5 +33,21 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	respondWithJSON(w, 200, databaseUsertoUser(user))
+	respondWithJSON(w, 201, databaseUsertoUser(user))
+}
+
+func (apiCfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request) {
+	apiKey, err := auth.GetAPIKey(r.Header)
+	if err != nil {
+		respondWithError(w, http.StatusUnauthorized, "Couldn't find api key")
+		return
+	}
+
+	user, err := apiCfg.DB.GetUserByAPIKey(r.Context(), apiKey)
+	if err != nil {
+		respondWithError(w, http.StatusNotFound, "Couldn't get user")
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, databaseUsertoUser(user))
 }

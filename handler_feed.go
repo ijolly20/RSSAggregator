@@ -46,5 +46,5 @@ func (cfg *apiConfig) handlerGetFeeds(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondWithJSON(w, 201, databaseFeesdToFeeds(feeds))
+	respondWithJSON(w, 201, databaseFeedsToFeeds(feeds))
 }
